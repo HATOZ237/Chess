@@ -5,9 +5,8 @@ import java.util.ArrayList;
 public class Cavalier extends Pion {
 
     @Override
-    public ArrayList<String> getmoves()
-    {
-        return super.getmoves();
+    protected void setMoves() {
+        super.setMoves();
     }
 
     public Cavalier(Echiquier echiquier, String position, Couleur couleur)

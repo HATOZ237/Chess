@@ -7,6 +7,7 @@ public class Pion
     protected String position;
     protected boolean ismoved;
     protected Couleur couleur;
+    protected ArrayList<String> moves;
 
     public String getPosition() {
         return position;
@@ -20,15 +21,12 @@ public class Pion
         this.position = position;
     }
 
-    public ArrayList<String> getmoves() {
-        if (ismoved)
-        {
-            if (couleur == echiquier.getPlayColor())
-            {
+    public ArrayList<String> getMoves() {
+        return moves;
+    }
 
-            }
-        }
-        return null;
+    protected void setMoves() {
+        this.moves = null;
     }
 
     public Couleur getCouleur() {
