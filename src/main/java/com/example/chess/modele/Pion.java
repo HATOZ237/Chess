@@ -39,4 +39,12 @@ public class Pion
         this.couleur = couleur;
         ismoved = false;
     }
+
+    @Override
+    public String toString() {
+        return "Pion{" +
+                "position='" + position + '\'' +
+                ", couleur=" + couleur +
+                '}';
+    }
 }

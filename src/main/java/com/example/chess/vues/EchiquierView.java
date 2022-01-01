@@ -44,7 +44,9 @@ public class EchiquierView extends AnchorPane {
         pieces = new ArrayList<>();
 
         for (Pion pion : echiquier.getPieces().values()) {
-            pieces.add(new PieceView(pion));
+            if(pion != null) {
+                pieces.add(new PieceView(pion));
+            }
         }
 
         getChildren().addAll(pieces);

@@ -6,6 +6,7 @@ import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Locale;
 
 public class PieceView extends ImageView {
     private final Pion pion;
@@ -15,8 +16,8 @@ public class PieceView extends ImageView {
         setFitHeight(70);
 
         pion = p;
-
-        String imageName = pion.getClass().getName() + "_" + pion.getCouleur().toString().toLowerCase();
+        System.out.println(pion);
+        String imageName = pion.getClass().getSimpleName().toLowerCase() + "_" + pion.getCouleur().toString().toLowerCase() + ".png";
         Image img = new Image(getClass().getResource("/images/" + imageName).toString());
         setImage(img);
 
@@ -26,8 +27,8 @@ public class PieceView extends ImageView {
     public void adjustPosition() throws IOException {
         int[] pos = getCasesFromPosition(pion.getPosition());
 
-        setX(pos[0]);
-        setY(pos[1]);
+        setX((pos[0] - 1) * 70);
+        setY((pos[1] - 1) * 70);
     }
 
     public int[] getCasesFromPosition(String pos) throws IOException {
@@ -37,7 +38,7 @@ public class PieceView extends ImageView {
         if (pos.length() == 2 && Arrays.asList(letters).contains(pos.charAt(0))){
             if (Arrays.asList(numbers).contains(pos.charAt(1))) {
                 int x = Arrays.asList(letters).indexOf(pos.charAt(0)) + 1;
-                int y = Arrays.asList(numbers).indexOf(pos.charAt(1)) + 1;
+                int y = 9 - (Arrays.asList(numbers).indexOf(pos.charAt(1)) + 1);
 
                 return new int[] { x, y };
             }
