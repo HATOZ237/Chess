@@ -9,7 +9,7 @@ public class Reine extends Pion
     }
 
     @Override
-    protected void setMoves() {
+    public void setMoves() {
         super.setMoves();
     }
 }

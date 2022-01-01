@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Roi extends Pion
 {
     @Override
-    protected void setMoves() {
+    public void setMoves() {
         super.setMoves();
     }
 
