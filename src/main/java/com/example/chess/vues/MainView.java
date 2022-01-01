@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.Optional;
 
 public class MainView {
@@ -20,7 +21,11 @@ public class MainView {
         if(player1Color.isPresent()) {
             System.out.println(player1Color.get());
 
-            mainLayout.getChildren().add(new EchiquierView(player1Color.get()));
+            try {
+                mainLayout.getChildren().add(new EchiquierView(player1Color.get()));
+            } catch (IOException exception) {
+
+            }
         }
     }
 }

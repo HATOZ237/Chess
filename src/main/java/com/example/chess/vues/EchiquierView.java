@@ -11,8 +11,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.math.*;
-
 public class EchiquierView extends AnchorPane {
 
     private final Echiquier echiquier;
@@ -25,21 +23,22 @@ public class EchiquierView extends AnchorPane {
 
         char letters[] = new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' };
 
-        for(int i = 0; i < 64; i++) {
+        for(int i = 0; i < letters.length; i++) {
             char col = letters[i];
-            int row = (int) Math.floor(i / 8) + 1 ;
 
-            String coordinates = String.valueOf(col) + row;
-            Color color = Color.GRAY;
+            for (int row = 8; row >= 1; row--) {
+                String coordinates = String.valueOf(col) + row;
+                Color color = Color.WHITE;
 
-            if((i % 2 == 0 && (row - 1) % 2 == 0) || (i % 2 != 0 && (row - 1) % 2 != 0)) {
-                color = Color.WHITE;
+                if((i % 2 == 0 && (row - 1) % 2 == 0) || (i % 2 != 0 && (row - 1) % 2 != 0)) {
+                    color = Color.GRAY;
+                }
+
+                CaseView caseView = new CaseView(coordinates, color);
+                getChildren().add(caseView);
+                AnchorPane.setTopAnchor(caseView, (8 - row) * 70.0);
+                AnchorPane.setLeftAnchor(caseView, i * 70.0);
             }
-
-            CaseView caseView = new CaseView(coordinates, color);
-            getChildren().add(caseView);
-            AnchorPane.setTopAnchor(caseView, (8 - row) * 70.0);
-            AnchorPane.setLeftAnchor(caseView, i * 70.0);
         }
 
         pieces = new ArrayList<>();

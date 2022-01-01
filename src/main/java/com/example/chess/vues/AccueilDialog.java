@@ -31,7 +31,7 @@ public class AccueilDialog extends Dialog<Couleur> {
                 "/accueil_dialog.fxml"));
         fxmlLoader.setController(this);
 
-        setTitle("Configuration");
+        setTitle("Échecs - Configuration");
 
         try {
             setDialogPane(fxmlLoader.load());
