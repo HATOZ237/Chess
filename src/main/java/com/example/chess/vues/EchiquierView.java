@@ -21,7 +21,7 @@ public class EchiquierView extends AnchorPane {
 
         setMaxSize(560, 560);
 
-        char letters[] = new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' };
+        char letters[] = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
 
         for(int i = 0; i < letters.length; i++) {
             char col = letters[i];

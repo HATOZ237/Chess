@@ -31,7 +31,7 @@ public class PieceView extends ImageView {
     }
 
     public int[] getCasesFromPosition(String pos) throws IOException {
-        Character[] letters = new Character[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' };
+        Character[] letters = new Character[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
         Character[] numbers = new Character[] { '1', '2', '3', '4', '5', '6', '7', '8' };
 
         if (pos.length() == 2 && Arrays.asList(letters).contains(pos.charAt(0))){
