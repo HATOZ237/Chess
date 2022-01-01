@@ -1,5 +1,7 @@
 package com.example.chess;
 
+import com.example.chess.modele.Couleur;
+import com.example.chess.modele.Echiquier;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -16,6 +18,8 @@ public class ChessApplication extends Application {
         stage.setScene(scene);
         stage.setMaximized(true);
         stage.show();
+        Echiquier echiquier = new Echiquier(Couleur.NOIR);
+        System.out.println(echiquier.getPieces());
     }
 
     public static void main(String[] args) {

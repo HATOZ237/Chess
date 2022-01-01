@@ -9,7 +9,7 @@ public class Tour extends Pion
     }
 
     @Override
-    public ArrayList<String> getmoves() {
-        return super.getmoves();
+    protected void setMoves() {
+        super.setMoves();
     }
 }
