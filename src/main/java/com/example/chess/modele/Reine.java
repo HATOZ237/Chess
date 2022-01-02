@@ -9,7 +9,17 @@ public class Reine extends Pion
     }
 
     @Override
+    public String toString() {
+        return "Reine{" +
+                "position='" + position + '\'' +
+                ", couleur=" + couleur +
+                '}';
+    }
+
+    @Override
     public void setMoves() {
-        super.setMoves();
+        moves = new ArrayList<>();
+        moves.addAll((new Tour(echiquier, position, couleur).getMoves()));
+        moves.addAll((new Fou(echiquier, position, couleur).getMoves()));
     }
 }

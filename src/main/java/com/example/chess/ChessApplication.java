@@ -21,7 +21,7 @@ public class ChessApplication extends Application {
         stage.setMaximized(true);
         stage.show();
         Echiquier echiquier = new Echiquier(Couleur.NOIR);
-        System.out.println(echiquier);
+        //System.out.println(echiquier);
     }
 
     public static void main(String[] args) {

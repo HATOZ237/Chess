@@ -10,8 +10,8 @@ public class Echiquier {
     private int nbreturn;
     private String selectedCase;
     private static ArrayList<String> cases;
-    public static ArrayList<String> axe_x ;
-    public static ArrayList<String> axe_y ;
+    public static ArrayList<String> axe_x;
+    public static ArrayList<String> axe_y;
 
     public Echiquier(Couleur playColor) {
         String[] axe_x = {"A", "B", "C", "D", "E", "F", "G", "H"};
@@ -20,8 +20,7 @@ public class Echiquier {
         int lengh = axe_x.length;
         Echiquier.axe_y = new ArrayList<>();
         Echiquier.axe_x = new ArrayList<>();
-        for(int i = 0; i < lengh; i++)
-        {
+        for (int i = 0; i < lengh; i++) {
             Echiquier.axe_x.add(axe_x[i]);
             Echiquier.axe_y.add(axe_y[i]);
         }
@@ -64,11 +63,9 @@ public class Echiquier {
         pieces.put("F8", new Fou(this, "F8", robotColor));
         pieces.put("D8", new Roi(this, "D8", robotColor));
         pieces.put("E8", new Reine(this, "E8", robotColor));
-        for (String key : cases)
-        {
+        for (String key : cases) {
             Pion pion = pieces.get(key);
-            if (pion != null)
-            {
+            if (pion != null) {
                 pion.setMoves();
             }
         }
@@ -102,12 +99,10 @@ public class Echiquier {
 
     @Override
     public String toString() {
-        String rep  = "";
-        for (String key: cases)
-        {
+        String rep = "";
+        for (String key : cases) {
             Pion pion = pieces.get(key);
-            if ( pion!= null)
-            {
+            if (pion != null) {
                 rep += pion.toString() + pion.getMoves().toString() + "\n";
             }
         }
@@ -117,4 +112,23 @@ public class Echiquier {
     public int getNbreturn() {
         return nbreturn;
     }
+
+    private boolean isEchec() {
+        return false;
+    }
+
+    private boolean isEchecMat() {
+        return false;
+    }
+
+    private void roque()
+    {
+
+    }
+
+    private void enPassant()
+    {
+
+    }
+
 }
