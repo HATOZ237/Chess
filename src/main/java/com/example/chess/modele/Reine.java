@@ -19,7 +19,11 @@ public class Reine extends Pion
     @Override
     public void setMoves() {
         moves = new ArrayList<>();
-        moves.addAll((new Tour(echiquier, position, couleur).getMoves()));
-        moves.addAll((new Fou(echiquier, position, couleur).getMoves()));
+        Tour tour = new Tour(echiquier, position, couleur);
+        Fou fou = new Fou(echiquier, position, couleur);
+        tour.setMoves();
+        fou.setMoves();
+        moves.addAll(tour.getMoves());
+        moves.addAll(fou.getMoves());
     }
 }

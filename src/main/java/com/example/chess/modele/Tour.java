@@ -86,8 +86,9 @@ public class Tour extends Pion
         }
         b =  y;
         //a = x;
-        while (b >= 0)
+        while (b > 0)
         {
+            b--;
             String pos = Echiquier.axe_x.get(a) + Echiquier.axe_y.get(b);
             Pion pion = echiquier.getPieces().get(pos);
             if (pion == null)
@@ -102,7 +103,6 @@ public class Tour extends Pion
                 }
                 break;
             }
-            b--;
         }
     }
 }
