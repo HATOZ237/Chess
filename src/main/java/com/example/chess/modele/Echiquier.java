@@ -3,13 +3,14 @@ package com.example.chess.modele;
 import java.util.*;
 
 public class Echiquier {
-    private HashMap<String, Pion> pieces;
-    private Couleur playColor;
-    private Couleur robotColor;
-    private Couleur turnColor;
-    private int nbreturn;
-    private String selectedCase;
-    private static ArrayList<String> cases;
+    protected HashMap<String, Pion> pieces;
+    protected Pion selectedPiece;
+    protected Couleur playColor;
+    protected Couleur robotColor;
+    protected Couleur turnColor;
+    protected int nbreturn;
+    //protected String selectedCase;
+    protected static ArrayList<String> cases;
     public static ArrayList<String> axe_x;
     public static ArrayList<String> axe_y;
 
@@ -31,7 +32,7 @@ public class Echiquier {
         } else robotColor = Couleur.NOIR;
         nbreturn = 1;
         turnColor = Couleur.NOIR;
-        selectedCase = null;
+        //selectedCase = null;
 
         setCases();
         for (String opt : cases) {
@@ -71,7 +72,7 @@ public class Echiquier {
         }
     }
 
-    private static void setCases() {
+    protected static void setCases() {
         cases = new ArrayList<>();
         for (String y : axe_y) {
             for (String x : axe_x) {
@@ -109,15 +110,64 @@ public class Echiquier {
         return rep;
     }
 
+    public void selectCase(String pos)
+    {
+        if (selectedPiece == null & checkPosition(pos))
+        {
+            selectedPiece = pieces.get(pos);
+        }
+        else playMove(pos);
+    }
+
+    public ArrayList<String> getMoves()
+    {
+        ArrayList<String> liste = new ArrayList<>();
+        if (selectedPiece != null & selectedPiece.getCouleur() == turnColor)
+        {
+            liste = selectedPiece.getMoves();
+        }
+        return liste;
+    }
+
+    private void playMove(String pos)
+    {
+        if (selectedPiece.getCouleur() == turnColor & selectedPiece.getMoves().contains(pos))
+        {
+            selectedPiece.setPosition(pos);
+            pieces.put(pos, selectedPiece);
+            changeTurn();
+            nbreturn++;
+            selectedPiece = null;
+
+        }
+        else if (pieces.get(pos) !=null)
+        {
+            Pion pion = pieces.get(pos);
+            if (selectedPiece.getCouleur() == pion.getCouleur())
+            {
+                selectedPiece = pion;
+            }
+        }
+    }
+
+    private void changeTurn()
+    {
+        if (turnColor == Couleur.NOIR)
+        {
+            turnColor = Couleur.BLANC;
+        }
+        else turnColor = Couleur.BLANC;
+    }
+
     public int getNbreturn() {
         return nbreturn;
     }
 
-    private boolean isEchec() {
+    protected boolean isEchec() {
         return false;
     }
 
-    private boolean isEchecMat() {
+    protected boolean isEchecMat() {
         return false;
     }
 
@@ -126,7 +176,7 @@ public class Echiquier {
 
     }
 
-    private void enPassant()
+    protected void enPassant()
     {
 
     }
