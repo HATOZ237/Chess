@@ -1,13 +1,19 @@
 @startuml
 
-title __MODELE's Class Diagram__\n
+title __CHESS's Class Diagram__\n
 
-  namespace  java {
+  namespace java {
+    namespace com.example.chess {
+      class com.example.chess.ChessApplication {
+      }
+    }
+  }
+  
+
+  namespace java {
     namespace com.example.chess {
       namespace modele {
         class com.example.chess.modele.Cavalier {
-            + Cavalier()
-            + setMoves()
         }
       }
     }
@@ -18,40 +24,16 @@ title __MODELE's Class Diagram__\n
     namespace com.example.chess {
       namespace modele {
         enum Couleur {
-          BLANC
-          NOIR
-          name
         }
       }
     }
   }
   
 
-  namespace  java {
+  namespace java {
     namespace com.example.chess {
       namespace modele {
         class com.example.chess.modele.Echiquier {
-            {static} + axe_x : ArrayList<String>
-            {static} + axe_y : ArrayList<String>
-            {static} # cases : ArrayList<String>
-            # nbreturn : int
-            # pieces : HashMap<String, Pion>
-            + Echiquier()
-            {static} + checkPosition()
-            + getMoves()
-            + getNbreturn()
-            + getPieces()
-            + getPlayColor()
-            + getTurnColor()
-            + selectCase()
-            + toString()
-            # enPassant()
-            # isEchec()
-            # isEchecMat()
-            {static} # setCases()
-            - changeTurn()
-            - playMove()
-            - roque()
         }
       }
     }
@@ -62,9 +44,6 @@ title __MODELE's Class Diagram__\n
     namespace com.example.chess {
       namespace modele {
         class com.example.chess.modele.Fou {
-            + Fou()
-            + setMoves()
-            + toString()
         }
       }
     }
@@ -75,18 +54,6 @@ title __MODELE's Class Diagram__\n
     namespace com.example.chess {
       namespace modele {
         class com.example.chess.modele.Pion {
-            # bigMove : boolean
-            # ismoved : boolean
-            # moves : ArrayList<String>
-            # position : String
-            + Pion()
-            + alreadyMoved()
-            + getCouleur()
-            + getMoves()
-            + getPosition()
-            + setMoves()
-            + setPosition()
-            + toString()
         }
       }
     }
@@ -97,9 +64,6 @@ title __MODELE's Class Diagram__\n
     namespace com.example.chess {
       namespace modele {
         class com.example.chess.modele.Reine {
-            + Reine()
-            + setMoves()
-            + toString()
         }
       }
     }
@@ -110,8 +74,6 @@ title __MODELE's Class Diagram__\n
     namespace com.example.chess {
       namespace modele {
         class com.example.chess.modele.Roi {
-            + Roi()
-            + setMoves()
         }
       }
     }
@@ -122,15 +84,63 @@ title __MODELE's Class Diagram__\n
     namespace com.example.chess {
       namespace modele {
         class com.example.chess.modele.Tour {
-            + Tour()
-            + setMoves()
-            + toString()
         }
       }
     }
   }
   
 
+  namespace java {
+    namespace com.example.chess {
+      namespace vues {
+        class com.example.chess.vues.AccueilDialog {
+        }
+      }
+    }
+  }
+  
+
+  namespace java {
+    namespace com.example.chess {
+      namespace vues {
+        class com.example.chess.vues.CaseView {
+        }
+      }
+    }
+  }
+  
+
+  namespace java {
+    namespace com.example.chess {
+      namespace vues {
+        class com.example.chess.vues.EchiquierView {
+        }
+      }
+    }
+  }
+  
+
+  namespace java {
+    namespace com.example.chess {
+      namespace vues {
+        class com.example.chess.vues.MainView {
+        }
+      }
+    }
+  }
+  
+
+  namespace java {
+    namespace com.example.chess {
+      namespace vues {
+        class com.example.chess.vues.PieceView {
+        }
+      }
+    }
+  }
+  
+
+  com.example.chess.ChessApplication -up-|> javafx.application.Application
   com.example.chess.modele.Cavalier -up-|> com.example.chess.modele.Pion
   com.example.chess.modele.Echiquier o-- com.example.chess.modele.Couleur : playColor
   com.example.chess.modele.Echiquier o-- com.example.chess.modele.Couleur : robotColor
@@ -142,6 +152,12 @@ title __MODELE's Class Diagram__\n
   com.example.chess.modele.Reine -up-|> com.example.chess.modele.Pion
   com.example.chess.modele.Roi -up-|> com.example.chess.modele.Pion
   com.example.chess.modele.Tour -up-|> com.example.chess.modele.Pion
+  com.example.chess.vues.AccueilDialog -up-|> javafx.scene.control.Dialog
+  com.example.chess.vues.CaseView -up-|> javafx.scene.shape.Rectangle
+  com.example.chess.vues.EchiquierView -up-|> javafx.scene.layout.AnchorPane
+  com.example.chess.vues.EchiquierView o-- com.example.chess.modele.Echiquier : echiquier
+  com.example.chess.vues.PieceView -up-|> javafx.scene.image.ImageView
+  com.example.chess.vues.PieceView o-- com.example.chess.modele.Pion : pion
 
 
 right footer

@@ -1,0 +1,237 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": ""
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 6,
+    "backwardDepth": 6,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false // root node is included
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "com.example.chess.modele.Echiquier"
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_1322970774 { 
+   	label=example
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_114011516 { 
+   	label=chess
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   Cavalier1217673893[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Cavalier</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Echiquier1217673893[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Echiquier</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   nbreturn: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   pieces: HashMap&lt;String, Pion&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   playColor: Couleur [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   robotColor: Couleur [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   selectedPiece: Pion [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   turnColor: Couleur [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ checkPosition(pos: String): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" ># enPassant()</TD></TR>
+<TR><TD ALIGN="LEFT" >- playMove()</TD></TR>
+<TR><TD ALIGN="LEFT" >- roque()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ selectCase(pos: String)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+EchiquierView1654622612[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)EchiquierView</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   echiquier: Echiquier [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   pieces: List&lt;PieceView&gt; [0..*]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Fou1217673893[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Fou</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+PieceView1654622612[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)PieceView</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   pion: Pion [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ adjustPosition()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getCasesFromPosition(pos: String): int[]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Pion1217673893[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Pion</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   bigMove: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   couleur: Couleur [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   echiquier: Echiquier [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   ismoved: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   moves: ArrayList&lt;String&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   position: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ alreadyMoved(): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Reine1217673893[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Reine</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Roi1217673893[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Roi</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Tour1217673893[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Tour</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+} 
+
+'edges    
+Echiquier1217673893 -> Pion1217673893[label="pieces
+[0..*]"];
+Echiquier1217673893 -> Pion1217673893[label="selectedPiece
+[0..1]"];
+EchiquierView1654622612 -> Echiquier1217673893[label="echiquier
+[0..1]"];
+EchiquierView1654622612 -> PieceView1654622612[label="pieces
+[0..*]"];
+PieceView1654622612 -> Pion1217673893[label="pion
+[0..1]"];
+Pion1217673893 -> Cavalier1217673893[arrowhead=none, arrowtail=empty, dir=both];
+Pion1217673893 -> Echiquier1217673893[label="echiquier
+[0..1]"];
+Pion1217673893 -> Fou1217673893[arrowhead=none, arrowtail=empty, dir=both];
+Pion1217673893 -> Reine1217673893[arrowhead=none, arrowtail=empty, dir=both];
+Pion1217673893 -> Roi1217673893[arrowhead=none, arrowtail=empty, dir=both];
+Pion1217673893 -> Tour1217673893[arrowhead=none, arrowtail=empty, dir=both];
+    
+}
+@enduml
