@@ -74,7 +74,7 @@ public class Pion {
 
         } else
         {
-            if (y >= 0) {
+            if (y >= 1) {
                 String pos = Echiquier.axe_x.get(x) + Echiquier.axe_y.get(y - 1);
                 if (echiquier.getPieces().get(pos) == null) {
                     moves.add(pos);
