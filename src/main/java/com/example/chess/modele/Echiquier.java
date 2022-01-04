@@ -129,6 +129,10 @@ public class Echiquier {
         return liste;
     }
 
+    public static ArrayList<String> getCases() {
+        return cases;
+    }
+
     private void playMove(String pos)
     {
         if (selectedPiece.getCouleur() == turnColor & selectedPiece.getMoves().contains(pos))
