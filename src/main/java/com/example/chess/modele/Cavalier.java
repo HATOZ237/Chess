@@ -29,8 +29,7 @@ public class Cavalier extends Pion {
                                 moves.add(pos);
                             }
                         }
-                        else if (pion == null)
-                        {
+                        else {
                             moves.add(pos);
                         }
                     }

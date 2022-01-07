@@ -8,6 +8,8 @@ public class Echiquier {
     protected Couleur playColor;
     protected Couleur robotColor;
     protected Couleur turnColor;
+    private Roi playerChief;
+    private Roi robotChief;
     protected int nbreturn;
     //protected String selectedCase;
     protected static ArrayList<String> cases;
@@ -46,15 +48,16 @@ public class Echiquier {
             String posj = x + "7";
             pieces.put(posj, new Pion(this, posj, robotColor));
         }
-
+        robotChief = new Roi(this, "E8", robotColor);
+        playerChief = new Roi(this, "E1",playColor);
         pieces.put("A1", new Tour(this, "A1", playColor));
         pieces.put("H1", new Tour(this, "H1", playColor));
         pieces.put("B1", new Cavalier(this, "B1", playColor));
         pieces.put("G1", new Cavalier(this, "G1", playColor));
         pieces.put("C1", new Fou(this, "C1", playColor));
         pieces.put("F1", new Fou(this, "F1", playColor));
-        pieces.put("D1", new Roi(this, "D1", playColor));
-        pieces.put("E1", new Reine(this, "E1", playColor));
+        pieces.put("E1",playerChief);
+        pieces.put("D1", new Reine(this, "D1", playColor));
 
         pieces.put("A8", new Tour(this, "A8", robotColor));
         pieces.put("H8", new Tour(this, "H8", robotColor));
@@ -62,14 +65,10 @@ public class Echiquier {
         pieces.put("G8", new Cavalier(this, "G8", robotColor));
         pieces.put("C8", new Fou(this, "C8", robotColor));
         pieces.put("F8", new Fou(this, "F8", robotColor));
-        pieces.put("D8", new Roi(this, "D8", robotColor));
-        pieces.put("E8", new Reine(this, "E8", robotColor));
-        for (String key : cases) {
-            Pion pion = pieces.get(key);
-            if (pion != null) {
-                pion.setMoves();
-            }
-        }
+        pieces.put("E8", robotChief);
+        pieces.put("D8", new Reine(this, "D8", robotColor));
+        refreshMoves();
+
     }
 
     protected static void setCases() {
@@ -81,6 +80,15 @@ public class Echiquier {
         }
     }
 
+    private void refreshMoves()
+    {
+        for (String key : cases) {
+            Pion pion = pieces.get(key);
+            if (pion != null) {
+                pion.setMoves();
+            }
+        }
+    }
     public static boolean checkPosition(String pos) {
         return cases.contains(pos);
     }
@@ -96,6 +104,52 @@ public class Echiquier {
 
     public Couleur getTurnColor() {
         return turnColor;
+    }
+
+    private boolean isSmallRoquePossible(){
+        if (turnColor == playColor)
+        {
+            if (!Objects.equals(playerChief.getPosition(), "E1")) return false;
+            if(playerChief.ismoved) return false;
+            Pion tour = pieces.get("H1");
+            if (tour ==  null) return false;
+            if(tour.ismoved & tour.equals(new Tour(this, "H1", playColor))) return false;
+            if (pieces.get("F1") != null) return false;
+            if (pieces.get("G1") != null) return false;
+            return !isInDanger("F1");
+        }
+        if(turnColor == robotColor)
+        {
+            if (!Objects.equals(robotChief.getPosition(), "E8")) return false;
+            if(robotChief.ismoved) return false;
+            Pion tour = pieces.get("H8");
+            if (tour ==  null) return false;
+            if(tour.ismoved & tour.equals(new Tour(this, "H8", robotColor))) return false;
+            if (pieces.get("F8") != null) return false;
+            if (pieces.get("G8") != null) return false;
+            return !isInDanger("F8");
+        }
+        return true;
+    }
+
+    private boolean isInDanger(String pos)
+    {
+        for(String key: cases)
+        {
+            Pion pion = pieces.get(key);
+            if (pion != null)
+            {
+                if (pion.getCouleur() != turnColor)
+                {
+                    if (pion.getMoves().contains(pos)) return true;
+                }
+            }
+        }
+        return false;
+    }
+    private boolean isBigRoquePossible()
+    {
+        return true;
     }
 
     @Override
@@ -139,6 +193,7 @@ public class Echiquier {
         {
             selectedPiece.setPosition(pos);
             pieces.put(pos, selectedPiece);
+            refreshMoves();
             changeTurn();
             nbreturn++;
             selectedPiece = null;
@@ -175,9 +230,12 @@ public class Echiquier {
         return false;
     }
 
-    private void roque()
+    private void smallRoque()
     {
+        if (isSmallRoquePossible())
+        {
 
+        }
     }
 
     protected void enPassant()
