@@ -102,6 +102,8 @@ public class Echiquier implements Serializable, Cloneable {
         return pieces;
     }
 
+    public Pion getSelectedPiece() { return selectedPiece; }
+
     public Couleur getPlayColor() {
         return playColor;
     }
@@ -195,7 +197,7 @@ public class Echiquier implements Serializable, Cloneable {
     public ArrayList<String> getMoves()
     {
         ArrayList<String> liste = new ArrayList<>();
-        if (selectedPiece != null & selectedPiece.getCouleur() == turnColor)
+        if (selectedPiece != null && selectedPiece.getCouleur() == turnColor)
         {
             liste = selectedPiece.getMoves();
         }

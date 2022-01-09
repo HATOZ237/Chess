@@ -1,5 +1,6 @@
 package com.example.chess.vues;
 
+import com.example.chess.modele.ChessException;
 import com.example.chess.modele.Couleur;
 import com.example.chess.modele.Echiquier;
 import com.example.chess.modele.Pion;
@@ -18,7 +19,7 @@ public class EchiquierView extends Pane {
     private String selectedCase;
     private List<String> lastMoves;
     private Map<String, CaseView> caseViews;
-    private Map<String, PieceView> pieceViews;
+    private List<PieceView> pieceViews;
 
     public EchiquierView(Couleur playerColor) {
         selectedCase = "";
@@ -37,18 +38,16 @@ public class EchiquierView extends Pane {
             caseViews.put(c, new CaseView(c));
         }
 
-        pieceViews = new HashMap<>();
+        pieceViews = new ArrayList<>();
         for (Map.Entry<String, Pion> pair : echiquier.getPieces().entrySet()) {
             Pion value = pair.getValue();
             if(value != null) {
-                String key = pair.getKey();
-                pieceViews.put(key,
-                        new PieceView(value.getClass().getSimpleName(), value.getCouleur(), key));
+                pieceViews.add(new PieceView(value));
             }
         }
 
         getChildren().addAll(caseViews.values());
-        getChildren().addAll(pieceViews.values());
+        getChildren().addAll(pieceViews);
     }
 
     private void onMouseClicked(MouseEvent event) {
@@ -58,43 +57,36 @@ public class EchiquierView extends Pane {
 
         System.out.println(echiquier.getTurnColor());
 
-        if(lastMoves.contains(pos)) {
+        for (String move : lastMoves) {
+            caseViews.get(move).changeCaseState(CaseView.CaseViewState.UNSELECTED);
+        }
+
+        if(Echiquier.checkPosition(selectedCase))
+            caseViews.get(selectedCase).changeCaseState(CaseView.CaseViewState.UNSELECTED);
+
+        try {
             echiquier.selectCase(pos);
-            pieceViews.get(selectedCase).adjustCoordinates(pos);
-            PieceView p = pieceViews.remove(selectedCase);
-            pieceViews.put(pos, p);
+            lastMoves = (List<String>) echiquier.getMoves().clone();
+            selectedCase = (echiquier.getSelectedPiece() != null) ?
+                    echiquier.getSelectedPiece().getPosition() : "";
 
             for (String move : lastMoves) {
-                caseViews.get(move).changeCaseState(CaseView.CaseViewState.UNSELECTED);
+                caseViews.get(move).changeCaseState(CaseView.CaseViewState.MOVE);
             }
-            caseViews.get(selectedCase).changeCaseState(CaseView.CaseViewState.UNSELECTED);
-            selectedCase = "";
-            lastMoves.clear();
-        } else {
-            if (Echiquier.checkPosition(selectedCase)) {
-                caseViews.get(selectedCase).changeCaseState(CaseView.CaseViewState.UNSELECTED);
-                for (String move : lastMoves) {
-                    caseViews.get(move).changeCaseState(CaseView.CaseViewState.UNSELECTED);
+            if(Echiquier.checkPosition(selectedCase))
+                caseViews.get(selectedCase).changeCaseState(CaseView.CaseViewState.SELECTED);
+
+            for(PieceView p : pieceViews) {
+                try {
+                    p.adjustCoordinates();
+                } catch (ChessException e) {
+                    pieceViews.remove(p);
+                    getChildren().remove(p);
                 }
             }
+        } catch (ChessException e) {
 
-            lastMoves.clear();
-
-            if (pos != selectedCase & Echiquier.checkPosition(pos)
-                    & echiquier.getPieces().get(pos) != null) {
-
-                if(echiquier.getPieces().get(pos).getCouleur() == echiquier.getTurnColor()) {
-                    echiquier.selectCase(pos);
-                    caseViews.get(pos).changeCaseState(CaseView.CaseViewState.SELECTED);
-
-                    lastMoves = (List<String>) echiquier.getMoves().clone();
-                    for (String move : lastMoves) {
-                        caseViews.get(move).changeCaseState(CaseView.CaseViewState.MOVE);
-                    }
-
-                    selectedCase = pos;
-                }
-            }
         }
+
     }
 }
