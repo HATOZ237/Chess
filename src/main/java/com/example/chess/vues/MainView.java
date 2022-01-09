@@ -21,11 +21,9 @@ public class MainView {
         if(player1Color.isPresent()) {
             System.out.println(player1Color.get());
 
-            try {
-                mainLayout.getChildren().add(new EchiquierView(player1Color.get()));
-            } catch (IOException exception) {
-
-            }
+            mainLayout.getChildren().add(new EchiquierView(player1Color.get()));
+        } else {
+            Platform.exit();
         }
     }
 }

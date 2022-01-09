@@ -3,52 +3,89 @@ package com.example.chess.vues;
 import com.example.chess.modele.Couleur;
 import com.example.chess.modele.Echiquier;
 import com.example.chess.modele.Pion;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.util.Pair;
 
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class EchiquierView extends AnchorPane {
-
+public class EchiquierView extends Pane {
     private final Echiquier echiquier;
-    private List<PieceView> pieces;
+    private String selectedCase;
+    private List<String> lastMoves;
+    private Map<String, CaseView> caseViews;
+    private Map<String, PieceView> pieceViews;
 
-    public EchiquierView(Couleur firstPlayerColor) throws IOException {
-        echiquier = new Echiquier(firstPlayerColor);
+    public EchiquierView(Couleur playerColor) {
+        selectedCase = "";
+        lastMoves = new ArrayList<>();
+        echiquier = new Echiquier(playerColor);
 
-        setMaxSize(560, 560);
+        initUi();
+        setOnMouseClicked(mouseEvent -> onMouseClicked(mouseEvent));
+    }
 
-        char letters[] = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
+    private void initUi() {
+        setMinSize(560, 560); setMaxSize(565, 565);
 
-        for(int i = 0; i < letters.length; i++) {
-            char col = letters[i];
+        caseViews = new HashMap<>();
+        for (String c : Echiquier.getCases()) {
+            caseViews.put(c, new CaseView(c));
+        }
 
-            for (int row = 8; row >= 1; row--) {
-                String coordinates = String.valueOf(col) + row;
-                Color color = Color.WHITE;
+        pieceViews = new HashMap<>();
+        for (Map.Entry<String, Pion> pair : echiquier.getPieces().entrySet()) {
+            Pion value = pair.getValue();
+            if(value != null) {
+                String key = pair.getKey();
+                pieceViews.put(key,
+                        new PieceView(value.getClass().getSimpleName(), value.getCouleur(), key));
+            }
+        }
 
-                if((i % 2 == 0 && (row - 1) % 2 == 0) || (i % 2 != 0 && (row - 1) % 2 != 0)) {
-                    color = Color.GRAY;
+        getChildren().addAll(caseViews.values());
+        getChildren().addAll(pieceViews.values());
+    }
+
+    private void onMouseClicked(MouseEvent event) {
+        int x = (int) Math.floor(event.getX() / 72);
+        int y = 7 - (int) Math.floor(event.getY() / 72);
+        String pos = Echiquier.axe_x.get(x) + Echiquier.axe_y.get(y);
+
+        if(lastMoves.contains(pos)) {
+            echiquier.playMove(pos);
+            pieceViews.get(selectedCase).adjustCoordinates(pos);
+            PieceView p = pieceViews.remove(selectedCase);
+            pieceViews.put(pos, p);
+            selectedCase = "";
+        } else {
+            if (Echiquier.checkPosition(selectedCase)) {
+                caseViews.get(selectedCase).changeCaseState(CaseView.CaseViewState.UNSELECTED);
+                for (String move : lastMoves) {
+                    caseViews.get(move).changeCaseState(CaseView.CaseViewState.UNSELECTED);
+                }
+            }
+
+            lastMoves.clear();
+            selectedCase = "";
+
+            if (pos != selectedCase & Echiquier.checkPosition(pos)
+                    & echiquier.getPieces().get(pos) != null) {
+
+                echiquier.selectCase(pos);
+                caseViews.get(pos).changeCaseState(CaseView.CaseViewState.SELECTED);
+
+                lastMoves = (List<String>) echiquier.getMoves().clone();
+                for (String move : lastMoves) {
+                    caseViews.get(move).changeCaseState(CaseView.CaseViewState.MOVE);
                 }
 
-                CaseView caseView = new CaseView(coordinates, color);
-                getChildren().add(caseView);
-                AnchorPane.setTopAnchor(caseView, (8 - row) * 70.0);
-                AnchorPane.setLeftAnchor(caseView, i * 70.0);
+                selectedCase = pos;
             }
         }
-
-        pieces = new ArrayList<>();
-
-        for (Pion pion : echiquier.getPieces().values()) {
-            if(pion != null) {
-                pieces.add(new PieceView(pion));
-            }
-        }
-
-        getChildren().addAll(pieces);
     }
 }
