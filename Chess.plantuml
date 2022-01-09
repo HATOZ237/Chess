@@ -2,16 +2,16 @@
 
 title __CHESS's Class Diagram__\n
 
-  namespace java {
-    namespace com.example.chess {
+  namespace  {
+    namespace om.example.chess {
       class com.example.chess.ChessApplication {
       }
     }
   }
   
 
-  namespace java {
-    namespace com.example.chess {
+  namespace  {
+    namespace om.example.chess {
       namespace modele {
         class com.example.chess.modele.Cavalier {
         }
@@ -20,8 +20,18 @@ title __CHESS's Class Diagram__\n
   }
   
 
-  namespace java {
-    namespace com.example.chess {
+  namespace  {
+    namespace om.example.chess {
+      namespace modele {
+        class com.example.chess.modele.ChessException {
+        }
+      }
+    }
+  }
+  
+
+  namespace  {
+    namespace om.example.chess {
       namespace modele {
         enum Couleur {
         }
@@ -30,8 +40,8 @@ title __CHESS's Class Diagram__\n
   }
   
 
-  namespace java {
-    namespace com.example.chess {
+  namespace  {
+    namespace om.example.chess {
       namespace modele {
         class com.example.chess.modele.Echiquier {
         }
@@ -40,8 +50,8 @@ title __CHESS's Class Diagram__\n
   }
   
 
-  namespace java {
-    namespace com.example.chess {
+  namespace  {
+    namespace om.example.chess {
       namespace modele {
         class com.example.chess.modele.Fou {
         }
@@ -50,8 +60,8 @@ title __CHESS's Class Diagram__\n
   }
   
 
-  namespace java {
-    namespace com.example.chess {
+  namespace  {
+    namespace om.example.chess {
       namespace modele {
         class com.example.chess.modele.Pion {
         }
@@ -60,8 +70,8 @@ title __CHESS's Class Diagram__\n
   }
   
 
-  namespace java {
-    namespace com.example.chess {
+  namespace  {
+    namespace om.example.chess {
       namespace modele {
         class com.example.chess.modele.Reine {
         }
@@ -70,8 +80,8 @@ title __CHESS's Class Diagram__\n
   }
   
 
-  namespace java {
-    namespace com.example.chess {
+  namespace  {
+    namespace om.example.chess {
       namespace modele {
         class com.example.chess.modele.Roi {
         }
@@ -80,8 +90,8 @@ title __CHESS's Class Diagram__\n
   }
   
 
-  namespace java {
-    namespace com.example.chess {
+  namespace  {
+    namespace om.example.chess {
       namespace modele {
         class com.example.chess.modele.Tour {
         }
@@ -90,8 +100,8 @@ title __CHESS's Class Diagram__\n
   }
   
 
-  namespace java {
-    namespace com.example.chess {
+  namespace  {
+    namespace om.example.chess {
       namespace vues {
         class com.example.chess.vues.AccueilDialog {
         }
@@ -100,8 +110,8 @@ title __CHESS's Class Diagram__\n
   }
   
 
-  namespace java {
-    namespace com.example.chess {
+  namespace  {
+    namespace om.example.chess {
       namespace vues {
         class com.example.chess.vues.CaseView {
         }
@@ -110,8 +120,8 @@ title __CHESS's Class Diagram__\n
   }
   
 
-  namespace java {
-    namespace com.example.chess {
+  namespace  {
+    namespace om.example.chess {
       namespace vues {
         class com.example.chess.vues.EchiquierView {
         }
@@ -120,8 +130,8 @@ title __CHESS's Class Diagram__\n
   }
   
 
-  namespace java {
-    namespace com.example.chess {
+  namespace  {
+    namespace om.example.chess {
       namespace vues {
         class com.example.chess.vues.MainView {
         }
@@ -130,8 +140,8 @@ title __CHESS's Class Diagram__\n
   }
   
 
-  namespace java {
-    namespace com.example.chess {
+  namespace  {
+    namespace om.example.chess {
       namespace vues {
         class com.example.chess.vues.PieceView {
         }
@@ -142,11 +152,17 @@ title __CHESS's Class Diagram__\n
 
   com.example.chess.ChessApplication -up-|> javafx.application.Application
   com.example.chess.modele.Cavalier -up-|> com.example.chess.modele.Pion
+  com.example.chess.modele.Echiquier .up.|> java.io.Serializable
+  com.example.chess.modele.Echiquier .up.|> java.lang.Cloneable
   com.example.chess.modele.Echiquier o-- com.example.chess.modele.Couleur : playColor
   com.example.chess.modele.Echiquier o-- com.example.chess.modele.Couleur : robotColor
   com.example.chess.modele.Echiquier o-- com.example.chess.modele.Pion : selectedPiece
   com.example.chess.modele.Echiquier o-- com.example.chess.modele.Couleur : turnColor
+  com.example.chess.modele.Echiquier o-- com.example.chess.modele.Roi : playerChief
+  com.example.chess.modele.Echiquier o-- com.example.chess.modele.Roi : robotChief
   com.example.chess.modele.Fou -up-|> com.example.chess.modele.Pion
+  com.example.chess.modele.Pion .up.|> java.io.Serializable
+  com.example.chess.modele.Pion .up.|> java.lang.Cloneable
   com.example.chess.modele.Pion o-- com.example.chess.modele.Couleur : couleur
   com.example.chess.modele.Pion o-- com.example.chess.modele.Echiquier : echiquier
   com.example.chess.modele.Reine -up-|> com.example.chess.modele.Pion

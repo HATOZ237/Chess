@@ -1,8 +1,9 @@
 package com.example.chess.modele;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Pion {
+public class Pion implements Serializable, Cloneable{
     protected Echiquier echiquier;
     protected String position;
     protected boolean ismoved;

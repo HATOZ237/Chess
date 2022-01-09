@@ -1,10 +1,12 @@
 package com.example.chess.modele;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Echiquier {
+public class Echiquier implements Serializable, Cloneable {
     protected HashMap<String, Pion> pieces;
     protected Pion selectedPiece;
+    //protected ArrayList<String> actualMoves;
     protected Couleur playColor;
     protected Couleur robotColor;
     protected Couleur turnColor;
@@ -17,6 +19,8 @@ public class Echiquier {
     public static ArrayList<String> axe_y;
 
     public Echiquier(Couleur playColor) {
+        selectedPiece = null;
+        //actualMoves = null;
         String[] axe_x = {"A", "B", "C", "D", "E", "F", "G", "H"};
         String[] axe_y = {"1", "2", "3", "4", "5", "6", "7", "8"};
         pieces = new HashMap<>();
@@ -166,11 +170,26 @@ public class Echiquier {
 
     public void selectCase(String pos)
     {
-        if (selectedPiece == null & checkPosition(pos))
+        if (!checkPosition(pos)) throw new ChessException("Cette case n'existe pas");
+        Pion pion = pieces.get(pos);
+        if (selectedPiece == null)
         {
-            selectedPiece = pieces.get(pos);
+            selectedPiece = pion;
         }
-        else playMove(pos);
+        else
+        {
+            if(pion != null)
+            {
+                if (pion.getCouleur() == selectedPiece.getCouleur())
+                {
+                    selectedPiece = pion;
+                }
+            }
+            else if(selectedPiece.getCouleur() == turnColor & selectedPiece.getMoves().contains(pos))
+            {
+                playMove(pos);
+            }
+        }
     }
 
     public ArrayList<String> getMoves()
@@ -189,32 +208,19 @@ public class Echiquier {
 
     private void playMove(String pos)
     {
-        if (selectedPiece.getCouleur() == turnColor & selectedPiece.getMoves().contains(pos))
-        {
-            selectedPiece.setPosition(pos);
-            pieces.put(pos, selectedPiece);
-            refreshMoves();
-            changeTurn();
-            nbreturn++;
-            selectedPiece = null;
+        pieces.put(selectedPiece.getPosition(), null);
+        selectedPiece.setPosition(pos);
+        pieces.put(pos, selectedPiece);
+        refreshMoves();
+        changeTurn();
+        nbreturn++;
+        selectedPiece = null;
 
-        }
-        else if (pieces.get(pos) !=null)
-        {
-            Pion pion = pieces.get(pos);
-            if (selectedPiece.getCouleur() == pion.getCouleur())
-            {
-                selectedPiece = pion;
-            }
-        }
     }
 
     private void changeTurn()
     {
-        if (turnColor == Couleur.NOIR)
-        {
-            turnColor = Couleur.BLANC;
-        }
+        if (turnColor == Couleur.NOIR) turnColor = Couleur.BLANC;
         else turnColor = Couleur.BLANC;
     }
 
@@ -223,7 +229,8 @@ public class Echiquier {
     }
 
     protected boolean isEchec() {
-        return false;
+        if (turnColor == playColor) return isInDanger(playerChief.getPosition());
+        else return isInDanger(robotChief.getPosition());
     }
 
     protected boolean isEchecMat() {
@@ -234,7 +241,10 @@ public class Echiquier {
     {
         if (isSmallRoquePossible())
         {
-
+            if (turnColor == playColor)
+            {
+                playerChief.setPosition("");
+            }
         }
     }
 
