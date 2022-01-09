@@ -56,12 +56,20 @@ public class EchiquierView extends Pane {
         int y = 7 - (int) Math.floor(event.getY() / 72);
         String pos = Echiquier.axe_x.get(x) + Echiquier.axe_y.get(y);
 
+        System.out.println(echiquier.getTurnColor());
+
         if(lastMoves.contains(pos)) {
-            /*echiquier.playMove(pos);
+            echiquier.selectCase(pos);
             pieceViews.get(selectedCase).adjustCoordinates(pos);
             PieceView p = pieceViews.remove(selectedCase);
             pieceViews.put(pos, p);
-            selectedCase = "";*/
+
+            for (String move : lastMoves) {
+                caseViews.get(move).changeCaseState(CaseView.CaseViewState.UNSELECTED);
+            }
+            caseViews.get(selectedCase).changeCaseState(CaseView.CaseViewState.UNSELECTED);
+            selectedCase = "";
+            lastMoves.clear();
         } else {
             if (Echiquier.checkPosition(selectedCase)) {
                 caseViews.get(selectedCase).changeCaseState(CaseView.CaseViewState.UNSELECTED);
@@ -71,21 +79,21 @@ public class EchiquierView extends Pane {
             }
 
             lastMoves.clear();
-            selectedCase = "";
 
             if (pos != selectedCase & Echiquier.checkPosition(pos)
-                    & echiquier.getPieces().get(pos) != null &
-                    echiquier.getPieces().get(pos).getCouleur() == echiquier.getTurnColor()) {
+                    & echiquier.getPieces().get(pos) != null) {
 
-                echiquier.selectCase(pos);
-                caseViews.get(pos).changeCaseState(CaseView.CaseViewState.SELECTED);
+                if(echiquier.getPieces().get(pos).getCouleur() == echiquier.getTurnColor()) {
+                    echiquier.selectCase(pos);
+                    caseViews.get(pos).changeCaseState(CaseView.CaseViewState.SELECTED);
 
-                lastMoves = (List<String>) echiquier.getMoves().clone();
-                for (String move : lastMoves) {
-                    caseViews.get(move).changeCaseState(CaseView.CaseViewState.MOVE);
+                    lastMoves = (List<String>) echiquier.getMoves().clone();
+                    for (String move : lastMoves) {
+                        caseViews.get(move).changeCaseState(CaseView.CaseViewState.MOVE);
+                    }
+
+                    selectedCase = pos;
                 }
-
-                selectedCase = pos;
             }
         }
     }
