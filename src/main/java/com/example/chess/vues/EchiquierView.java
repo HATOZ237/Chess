@@ -57,11 +57,11 @@ public class EchiquierView extends Pane {
         String pos = Echiquier.axe_x.get(x) + Echiquier.axe_y.get(y);
 
         if(lastMoves.contains(pos)) {
-            echiquier.playMove(pos);
+            /*echiquier.playMove(pos);
             pieceViews.get(selectedCase).adjustCoordinates(pos);
             PieceView p = pieceViews.remove(selectedCase);
             pieceViews.put(pos, p);
-            selectedCase = "";
+            selectedCase = "";*/
         } else {
             if (Echiquier.checkPosition(selectedCase)) {
                 caseViews.get(selectedCase).changeCaseState(CaseView.CaseViewState.UNSELECTED);
@@ -74,7 +74,8 @@ public class EchiquierView extends Pane {
             selectedCase = "";
 
             if (pos != selectedCase & Echiquier.checkPosition(pos)
-                    & echiquier.getPieces().get(pos) != null) {
+                    & echiquier.getPieces().get(pos) != null &
+                    echiquier.getPieces().get(pos).getCouleur() == echiquier.getTurnColor()) {
 
                 echiquier.selectCase(pos);
                 caseViews.get(pos).changeCaseState(CaseView.CaseViewState.SELECTED);
